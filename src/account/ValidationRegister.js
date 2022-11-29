@@ -74,10 +74,7 @@ export const ValidationRegister = () => {
     }
 
     useEffect( () => {
-        if(cookie.get('code') === undefined){
-            navigate('/register');
-        }
-
+        
         if( cookie.get('email') !== undefined ){
             navigate('/feed')
         }

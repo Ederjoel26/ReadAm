@@ -42,9 +42,8 @@ export const Register = () => {
         }   
 
         disabled.current.disabled = true;
-        alert('Hemos enviado un codigo a tu correo.');
-        navigate('/validation');
-
+        
+///
         const validationCode = await axios({
             method:'post',
             url: 'https://readam.vercel.app/user/sendMail',
@@ -59,6 +58,9 @@ export const Register = () => {
         cookie.set('validationEmail', input.email);
         cookie.set('validationPass', input.password);
         cookie.set('validationUserName', input.userName);
+
+        alert('Hemos enviado un codigo a tu correo.');
+        navigate('/validation');
     }
 
     useEffect(() => {
