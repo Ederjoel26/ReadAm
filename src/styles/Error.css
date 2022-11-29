@@ -4,3 +4,8 @@
 .txt-header{
     font-size: 200px;
 }
+.bg-nf{
+    background-image: url('../../public/Fondo.svg');
+    background-repeat: no-repeat;
+    background-size: cover;
+}

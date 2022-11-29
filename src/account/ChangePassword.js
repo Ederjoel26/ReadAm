@@ -8,6 +8,7 @@ export const ChangePassword = () => {
 
     const cookie = new Cookies();
     const navigate = useNavigate();
+    const validatePassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;
 
     const [ input, setInput ] = useState({
         'password': '',
@@ -22,7 +23,9 @@ export const ChangePassword = () => {
     }
 
     const handleClick = async() => {
-        if( input.password !== input.rePassword){
+        if(input.password.tes())
+
+        if(input.password !== input.rePassword){
             alert('Las contraseñas no son iguales, favor de rectificar.');
             return;
         }
@@ -57,9 +60,12 @@ export const ChangePassword = () => {
 
     return (
         <div>
-            <input type='text' placeholder='Nueva contraseña' name='password' onChange={ handleChange }/>
-            <input type='text' placeholder='Confirmar contraseña' name='rePassword' onChange={ handleChange }/>
-            <input type='button' value='Cambiar contraseña' onClick={ handleClick }/>
+            <center>
+                <h1>Cambiar contraseña</h1>
+                <input type='text' placeholder='Nueva contraseña' name='password' onChange={ handleChange }/> <br/>
+                <input type='text' placeholder='Confirmar contraseña' name='rePassword' onChange={ handleChange }/> <br/>
+                <input type='button' value='Cambiar contraseña' onClick={ handleClick }/> <br/>
+            </center>    
         </div>
     );
 }

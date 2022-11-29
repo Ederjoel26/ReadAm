@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useEffect, useState,useRef } from "react";
 import { useNavigate } from "react-router-dom";
 import Cookies from "universal-cookie";
 import axios from "axios";
@@ -7,6 +7,9 @@ export const RecoverPassword = () => {
     
     const cookie = new Cookies();
     const navigate = useNavigate();
+    const hiddenBtn = useRef(true);
+    const hiddenTxt = useRef(true);
+    const disabled = useRef(false);
     
     const [ input, setInput ] = useState({
         'email': '',
@@ -21,6 +24,10 @@ export const RecoverPassword = () => {
     }
 
     const handleClick = async () => {
+        hiddenTxt.current.hidden = false;
+        hiddenBtn.current.hidden = false;
+        disabled.current.disabled = true;
+        
         const recovercode = await axios({
             method:'post',
             url: 'https://readam.vercel.app/user/sendMailRecover',
@@ -28,6 +35,7 @@ export const RecoverPassword = () => {
                 email: input.email
             }
         });
+
         cookie.set('recover', recovercode.data);
     }
 
@@ -44,7 +52,7 @@ export const RecoverPassword = () => {
 
     useEffect(() => {
         if( cookie.get('email') !== undefined ){
-            navigate('/feed')
+            navigate('/feed');
         }
     });
 
@@ -53,9 +61,9 @@ export const RecoverPassword = () => {
             <center>
                 <h1>Recuperacion de token</h1>
                 <input type='text' placeholder='email' name='email' require='true' onChange={ handleChange }/> <br/>
-                <input type='button' value = 'Mandar token' onClick={ handleClick }/> <br/>
-                <input type ='text' name='token' placeholder='Paste your code here' require='true' onChange={ handleChange }/> <br/>
-                <input type='button' value = 'Validar token' onClick={ handleClickValidate }/>
+                <input type='button' ref={ disabled } value = 'Mandar token' onClick={ handleClick }/> <br/>
+                <input type ='text ' hidden ref={ hiddenTxt } name='token' placeholder='Paste your code here' require='true' onChange={ handleChange }/> <br/>
+                <input type='button' hidden ref={ hiddenBtn } value = 'Validar token' onClick={ handleClickValidate }/>
             </center>
         </div>
     );
