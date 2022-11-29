@@ -84,7 +84,7 @@ export const ValidationRegister = () => {
         <div>
             <center>
                 <h1>Verificacion de correo</h1>
-                <input type = 'text' required name = "validationCode" placeholder = "Paste your code here"  onChange={ handleChange }/> <br/>
+                <input type = 'text' required='true' name = "validationCode" placeholder = "Paste your code here"  onChange={ handleChange }/> <br/>
                 <input type = 'button' value='Verificar' onClick={ handleClick }/>
             </center>
         </div>
