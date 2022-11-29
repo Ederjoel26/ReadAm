@@ -23,7 +23,10 @@ export const ChangePassword = () => {
     }
 
     const handleClick = async() => {
-        if(input.password.tes())
+        if(!validatePassword.test(input.password) || !validatePassword.test(input.rePassword)){
+            alert('La contraseña debe de contener letras mayusculas, minusculas, numeros, caracteres especiales y que tenga de 8 a 15 caracteres');
+            return;
+        }
 
         if(input.password !== input.rePassword){
             alert('Las contraseñas no son iguales, favor de rectificar.');
@@ -55,15 +58,15 @@ export const ChangePassword = () => {
     useEffect(() => {
         if(cookie.get('email') !== undefined){
             navigate('/feed');
-        }
+        }   
     },[])
 
     return (
         <div>
             <center>
                 <h1>Cambiar contraseña</h1>
-                <input type='text' placeholder='Nueva contraseña' name='password' onChange={ handleChange }/> <br/>
-                <input type='text' placeholder='Confirmar contraseña' name='rePassword' onChange={ handleChange }/> <br/>
+                <input type='password' required='true' placeholder='Nueva contraseña' name='password' onChange={ handleChange }/> <br/>
+                <input type='password' required='true' placeholder='Confirmar contraseña' name='rePassword' onChange={ handleChange }/> <br/>
                 <input type='button' value='Cambiar contraseña' onClick={ handleClick }/> <br/>
             </center>    
         </div>

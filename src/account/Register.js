@@ -1,4 +1,4 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useRef} from "react";
 import Cookies from "universal-cookie";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
@@ -7,6 +7,7 @@ export const Register = () => {
     
     const cookie = new Cookies();
     const navigate = useNavigate();
+    const disabled = useRef(false);
     const validatePassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;
 
     const [ input, setInput ] = useState({
@@ -37,7 +38,11 @@ export const Register = () => {
             alert('El correo electronico introducido ya se ha utilizado anteriormente en otra cuenta, favor de utilizar otro correo.')
             return;
         }   
-        
+
+        disabled.current.disabled = true;
+        alert('Hemos enviado un codigo a tu correo.');
+        navigate('/validation');
+
         const validationCode = await axios({
             method:'post',
             url: 'https://readam.vercel.app/user/sendMail',
@@ -50,7 +55,6 @@ export const Register = () => {
         cookie.set('validationEmail', input.email);
         cookie.set('validationPass', input.password);
         cookie.set('validationUserName', input.userName);
-        navigate('/validation');
     }
 
     useEffect(() => {
@@ -66,7 +70,7 @@ export const Register = () => {
                 <input type = 'text' placeholder="email" require='true' name = 'email' onChange = { handleChange }/> <br/>
                 <input type = 'password' placeholder="password" require='true' name = 'password' onChange = { handleChange }/> <br/>
                 <input type = 'text' placeholder="User name" require='true' name = 'userName' onChange = { handleChange }/> <br/>
-                <input type = 'button' value='Registrarse' require='true' onClick = { handleClick }/>
+                <input type = 'button'ref={ disabled } value='Registrarse' require='true' onClick = { handleClick }/>
             </center>
         </div>
     );

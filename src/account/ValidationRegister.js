@@ -41,7 +41,7 @@ export const ValidationRegister = () => {
         });
 
         cookie.set('email', cookie.get('validationEmail'));
-        alert('Felicidades, ahora eres uno de nuestros usuarios.');
+        makeNotification();
         cookie.remove('validationEmail');
         cookie.remove('validationPass');
         cookie.remove('validationUserName');
@@ -49,6 +49,22 @@ export const ValidationRegister = () => {
         navigate('/feed');
     }
 
+    const makeNotification = () => {
+        if(Notification.permission !== 'granted'){
+            Notification.requestPermission();
+        }else{
+            let notification = new Notification('Felicidades!, ahora eres uno de nuestros usuarios.',
+            {
+                icon: "https://th.bing.com/th/id/R.3291c1a14fb5181b93a66b20982e0e4e?rik=LBmnkdmjhjegow&riu=http%3a%2f%2fprofessionalhxh.weebly.com%2fuploads%2f4%2f5%2f7%2f8%2f45785219%2f7972827_orig.png&ehk=zaLl0TKkx0tKvvDgJyz72rmOmA2mSVZDkB7Vbxu%2bUWY%3d&risl=&pid=ImgRaw&r=0",
+                body:'De parte del equipo de desarrolladores de ReadAm esperamos que tengas una buena experiencia usando nuestro blog :)'
+            });
+
+            notification.onclick = () =>{
+                navigate('/feed');
+            };
+        }
+        
+    }
 
     useEffect( () => {
         if(cookie.get('code') === undefined){
@@ -57,6 +73,10 @@ export const ValidationRegister = () => {
 
         if( cookie.get('email') !== undefined ){
             navigate('/feed')
+        }
+
+        if(Notification.permission !== 'granted'){
+            Notification.requestPermission();
         }
     }, []);
 
