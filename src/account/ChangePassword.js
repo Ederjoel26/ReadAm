@@ -22,6 +22,22 @@ export const ChangePassword = () => {
         });
     }
 
+    const makeNotification = (title, body) => {
+        if(Notification.permission !== 'granted'){
+            Notification.requestPermission();
+        }else{
+            const notification = new Notification( title ,
+            {
+                icon: "https://th.bing.com/th/id/R.3291c1a14fb5181b93a66b20982e0e4e?rik=LBmnkdmjhjegow&riu=http%3a%2f%2fprofessionalhxh.weebly.com%2fuploads%2f4%2f5%2f7%2f8%2f45785219%2f7972827_orig.png&ehk=zaLl0TKkx0tKvvDgJyz72rmOmA2mSVZDkB7Vbxu%2bUWY%3d&risl=&pid=ImgRaw&r=0",
+                body: body
+            });
+    
+            notification.onclick = () =>{
+                navigate('/feed');
+            };
+        }
+    }
+
     const handleClick = async() => {
         if(!validatePassword.test(input.password) || !validatePassword.test(input.rePassword)){
             alert('La contraseña debe de contener letras mayusculas, minusculas, numeros, caracteres especiales y que tenga de 8 a 15 caracteres');
@@ -50,7 +66,7 @@ export const ChangePassword = () => {
             }
         });
 
-        alert('Cambio de contraseña hecho perfectamente');
+        makeNotification('Cambio de contraseña realizado correctamente.', 'Trata de ser más cuidadoso con tu contraseña :)')
         cookie.remove('emailRecover');
         navigate('/login');
     }
@@ -59,15 +75,19 @@ export const ChangePassword = () => {
         if(cookie.get('email') !== undefined){
             navigate('/feed');
         }   
+
+        if(cookie.get('emailRecover') === undefined){
+            navigate('/login');
+        }
     },[])
 
     return (
         <div>
             <center>
                 <h1>Cambiar contraseña</h1>
-                <input type='password' required='true' placeholder='Nueva contraseña' name='password' onChange={ handleChange }/> <br/>
-                <input type='password' required='true' placeholder='Confirmar contraseña' name='rePassword' onChange={ handleChange }/> <br/>
-                <input type='button' value='Cambiar contraseña' onClick={ handleClick }/> <br/>
+                    <input type='password' placeholder='Nueva contraseña' name='password' onChange={ handleChange }/> <br/>
+                    <input type='password' placeholder='Confirmar contraseña' name='rePassword' onChange={ handleChange }/> <br/>
+                    <input type='button' value='Cambiar contraseña' onClick={ handleClick }/>
             </center>    
         </div>
     );
