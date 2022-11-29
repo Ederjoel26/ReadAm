@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useState, useRef } from 'react';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 import { useNavigate } from 'react-router-dom'
@@ -8,6 +8,7 @@ export const Login = () => {
     
     const cookie = new Cookies();
     const navigate = useNavigate();
+    const disabled = useRef(false);
 
     const [ input, setInput ] = useState({
         'email': '',
@@ -19,6 +20,22 @@ export const Login = () => {
             ...input,
             [e.target.name]: e.target.value
         });
+    }
+
+    const makeNotification = () => {
+        if(Notification.permission !== 'granted'){
+            Notification.requestPermission();
+        }else{
+            const notification = new Notification('¡Qué bueno que regresaste!',
+            {
+                icon: "https://th.bing.com/th/id/R.3291c1a14fb5181b93a66b20982e0e4e?rik=LBmnkdmjhjegow&riu=http%3a%2f%2fprofessionalhxh.weebly.com%2fuploads%2f4%2f5%2f7%2f8%2f45785219%2f7972827_orig.png&ehk=zaLl0TKkx0tKvvDgJyz72rmOmA2mSVZDkB7Vbxu%2bUWY%3d&risl=&pid=ImgRaw&r=0",
+                body:'Esperamos que sigas teniendo una gran experiencia.'
+            });
+
+            notification.onclick = () =>{
+                navigate('/feed');
+            };
+        }
     }
 
     const handleClick = async () => {
@@ -36,14 +53,22 @@ export const Login = () => {
             alert('La contraseña es incorrecta, favor de rectificarla.');
             return;
         }
-             
+        
+        disabled.current.disabled = true;
         cookie.set('email', input.email);
         navigate('/feed');
+        makeNotification();
     }
+
+
 
     useEffect(() => {
         if( cookie.get('email') !== undefined ){
             navigate('/feed')
+        }
+
+        if(Notification.permission !== 'granted'){
+            Notification.requestPermission();
         }
     },[])
     
@@ -54,7 +79,7 @@ export const Login = () => {
                     <h1>Login</h1> <br/>
                     <input type = 'text' placeholder = 'email' name = 'email' onChange = { handleChange }/> <br/>
                     <input type = 'password' placeholder = 'password' name = 'password' onChange = { handleChange }/> <br/>
-                    <input type = 'button' value = 'Iniciar sesion' onClick = { handleClick }/> <br/>
+                    <input type = 'button' ref={ disabled } value = 'Iniciar sesion' onClick = { handleClick }/> <br/>
                     <a href='/recover'> Forgot your password? </a>
                 </div>
             </center> 

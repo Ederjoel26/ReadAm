@@ -11,6 +11,8 @@ export const Register = () => {
     const validatePassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;
 
     const [ input, setInput ] = useState({
+        'name': '',
+        'surname': '',
         'email': '',
         'password':'',
         'userName': ''
@@ -52,6 +54,8 @@ export const Register = () => {
         });
 
         cookie.set('code', validationCode.data);
+        cookie.set('validationName', input.name);
+        cookie.set('validationSurname', input.surname)
         cookie.set('validationEmail', input.email);
         cookie.set('validationPass', input.password);
         cookie.set('validationUserName', input.userName);
@@ -67,9 +71,11 @@ export const Register = () => {
         <div>
             <center>
                 <h1>Registrarse</h1>
-                <input type = 'text' placeholder="email" require='true' name = 'email' onChange = { handleChange }/> <br/>
-                <input type = 'password' placeholder="password" require='true' name = 'password' onChange = { handleChange }/> <br/>
-                <input type = 'text' placeholder="User name" require='true' name = 'userName' onChange = { handleChange }/> <br/>
+                <input type= 'text' placeholder = 'Nombre' require='true' name = 'name' onChange = { handleChange }/> <br/>
+                <input type= 'text' placeholder="Apellido" require='true' name = 'surname' onChange = { handleChange }/> <br/>
+                <input type = 'text' placeholder="Correo" require='true' name = 'email' onChange = { handleChange }/> <br/>
+                <input type = 'password' placeholder="Contraseña" require='true' name = 'password' onChange = { handleChange }/> <br/>
+                <input type = 'text' placeholder="Nombre de usuario" require='true' name = 'userName' onChange = { handleChange }/> <br/>
                 <input type = 'button'ref={ disabled } value='Registrarse' require='true' onClick = { handleClick }/>
             </center>
         </div>

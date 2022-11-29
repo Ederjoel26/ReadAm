@@ -34,7 +34,10 @@ export const ValidationRegister = () => {
                 email: cookie.get('validationEmail'),
                 password: cookie.get('validationPass'),
                 userName: cookie.get('validationUserName'),
+                name: cookie.get('validationName'),
+                surname: cookie.get('validationSurname'),
                 followers: [],
+                categories: [],
                 imgPerfilAddress: '',
                 imgBackgroundAddress: ''
             }
@@ -42,6 +45,8 @@ export const ValidationRegister = () => {
 
         cookie.set('email', cookie.get('validationEmail'));
         makeNotification();
+        cookie.remove('validationName');
+        cookie.remove('validationSurname');
         cookie.remove('validationEmail');
         cookie.remove('validationPass');
         cookie.remove('validationUserName');
@@ -53,7 +58,7 @@ export const ValidationRegister = () => {
         if(Notification.permission !== 'granted'){
             Notification.requestPermission();
         }else{
-            let notification = new Notification('Felicidades!, ahora eres uno de nuestros usuarios.',
+            const notification = new Notification('¡Felicidades!, ahora formas parte de nuestra comunidad.',
             {
                 icon: "https://th.bing.com/th/id/R.3291c1a14fb5181b93a66b20982e0e4e?rik=LBmnkdmjhjegow&riu=http%3a%2f%2fprofessionalhxh.weebly.com%2fuploads%2f4%2f5%2f7%2f8%2f45785219%2f7972827_orig.png&ehk=zaLl0TKkx0tKvvDgJyz72rmOmA2mSVZDkB7Vbxu%2bUWY%3d&risl=&pid=ImgRaw&r=0",
                 body:'De parte del equipo de desarrolladores de ReadAm esperamos que tengas una buena experiencia usando nuestro blog :)'
@@ -63,7 +68,6 @@ export const ValidationRegister = () => {
                 navigate('/feed');
             };
         }
-        
     }
 
     useEffect( () => {
@@ -84,7 +88,7 @@ export const ValidationRegister = () => {
         <div>
             <center>
                 <h1>Verificacion de correo</h1>
-                <input type = 'text' required='true' name = "validationCode" placeholder = "Paste your code here"  onChange={ handleChange }/> <br/>
+                <input type = 'text' require='true' name = "validationCode" placeholder = "Pega tu código aquí"  onChange={ handleChange }/> <br/>
                 <input type = 'button' value='Verificar' onClick={ handleClick }/>
             </center>
         </div>

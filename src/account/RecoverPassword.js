@@ -60,9 +60,9 @@ export const RecoverPassword = () => {
         <div>
             <center>
                 <h1>Recuperacion de token</h1>
-                <input type='text' placeholder='email' name='email' require='true' onChange={ handleChange }/> <br/>
+                <input type='text' placeholder='Correo' name='email' require='true' onChange={ handleChange }/> <br/>
                 <input type='button' ref={ disabled } value = 'Mandar token' onClick={ handleClick }/> <br/>
-                <input type ='text ' hidden ref={ hiddenTxt } name='token' placeholder='Paste your code here' require='true' onChange={ handleChange }/> <br/>
+                <input type ='text ' hidden ref={ hiddenTxt } name='token' placeholder='Pega tu código aquí.' require='true' onChange={ handleChange }/> <br/>
                 <input type='button' hidden ref={ hiddenBtn } value = 'Validar token' onClick={ handleClickValidate }/>
             </center>
         </div>
