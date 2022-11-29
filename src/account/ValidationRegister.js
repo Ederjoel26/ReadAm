@@ -36,7 +36,9 @@ export const ValidationRegister = () => {
         }
     }
 
-    const handleClick = async () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
         if(input.validationCode !== cookie.get('code')){
             alert('El codigo es incorrecto, favor de verificarlo.');
             return;
@@ -70,11 +72,11 @@ export const ValidationRegister = () => {
         cookie.remove('validationPass');
         cookie.remove('validationUserName');
 
-        navigate('/feed');
+        navigate('/configurations-blog');
     }
 
     useEffect( () => {
-        
+
         if( cookie.get('email') !== undefined ){
             navigate('/feed')
         }
@@ -87,9 +89,11 @@ export const ValidationRegister = () => {
     return (
         <div>
             <center>
-                <h1>Verificacion de correo</h1>
-                <input type = 'text' require='true' name = "validationCode" placeholder = "Pega tu código aquí"  onChange={ handleChange }/> <br/>
-                <input type = 'button' ref={ disabled } value='Verificar' onClick={ handleClick }/>
+                <form onSubmit={ handleSubmit }>
+                    <h1>Verificacion de correo</h1>
+                    <input type = 'text' required={true} name = "validationCode" placeholder = "Pega tu código aquí"  onChange={ handleChange }/> <br/>
+                    <input type = 'submit' ref={ disabled } value='Verificar'/>
+                </form>
             </center>
         </div>
     );

@@ -25,7 +25,9 @@ export const Register = () => {
         });
     }
 
-    const handleClick = async () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
         if( !validatePassword.test(input.password) ) {
             alert('La contraseña debe de contener letras mayusculas, minusculas, numeros, caracteres especiales y que tenga de 8 a 15 caracteres');
             return;
@@ -42,8 +44,7 @@ export const Register = () => {
         }   
 
         disabled.current.disabled = true;
-        
-///
+    
         const validationCode = await axios({
             method:'post',
             url: 'https://readam.vercel.app/user/sendMail',
@@ -72,13 +73,15 @@ export const Register = () => {
     return (
         <div>
             <center>
-                <h1>Registrarse</h1>
-                <input type= 'text' placeholder = 'Nombre' require='true' name = 'name' onChange = { handleChange }/> <br/>
-                <input type= 'text' placeholder="Apellido" require='true' name = 'surname' onChange = { handleChange }/> <br/>
-                <input type = 'text' placeholder="Correo" require='true' name = 'email' onChange = { handleChange }/> <br/>
-                <input type = 'password' placeholder="Contraseña" require='true' name = 'password' onChange = { handleChange }/> <br/>
-                <input type = 'text' placeholder="Nombre de usuario" require='true' name = 'userName' onChange = { handleChange }/> <br/>
-                <input type = 'button'ref={ disabled } value='Registrarse' require='true' onClick = { handleClick }/>
+                <form onSubmit={ handleSubmit }>
+                    <h1>Registrarse</h1>
+                    <input type= 'text' required={true} placeholder = 'Nombre' require='true' name = 'name' onChange = { handleChange }/> <br/>
+                    <input type= 'text' required={true} placeholder="Apellido" require='true' name = 'surname' onChange = { handleChange }/> <br/>
+                    <input type = 'text' required={true} placeholder="Correo" require='true' name = 'email' onChange = { handleChange }/> <br/>
+                    <input type = 'password' required={true} placeholder="Contraseña" require='true' name = 'password' onChange = { handleChange }/> <br/>
+                    <input type = 'text' required={true} placeholder="Nombre de usuario" require='true' name = 'userName' onChange = { handleChange }/> <br/>
+                    <input type = 'submit' ref={ disabled } value='Registrarse' require='true'/>
+                </form>
             </center>
         </div>
     );

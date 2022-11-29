@@ -6,6 +6,7 @@ import { ValidationRegister } from './account/ValidationRegister';
 import { RecoverPassword } from './account/RecoverPassword';
 import { ChangePassword } from './account/ChangePassword';
 import { Error } from './views/Error';
+import { ConfigurationsBlog } from './account/ConfigurationsBlog';
 
 function App() {
   return (    
@@ -17,6 +18,7 @@ function App() {
           <Route path='/validation' element={ <ValidationRegister/> }></Route>
           <Route path='/recover' element={ <RecoverPassword/> }></Route>
           <Route path='/change-pass' element= { <ChangePassword/> }></Route>
+          <Route path='/configurations-blog' element={ <ConfigurationsBlog/> }></Route>
           <Route path='*' element={ <Error/> }></Route>
         </Routes>
       </Router>

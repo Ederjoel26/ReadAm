@@ -38,7 +38,9 @@ export const ChangePassword = () => {
         }
     }
 
-    const handleClick = async() => {
+    const handleSubmit = async(e) => {
+        e.preventDefault();
+
         if(!validatePassword.test(input.password) || !validatePassword.test(input.rePassword)){
             alert('La contraseña debe de contener letras mayusculas, minusculas, numeros, caracteres especiales y que tenga de 8 a 15 caracteres');
             return;
@@ -84,10 +86,12 @@ export const ChangePassword = () => {
     return (
         <div>
             <center>
-                <h1>Cambiar contraseña</h1>
-                    <input type='password' placeholder='Nueva contraseña' name='password' onChange={ handleChange }/> <br/>
-                    <input type='password' placeholder='Confirmar contraseña' name='rePassword' onChange={ handleChange }/> <br/>
-                    <input type='button' value='Cambiar contraseña' onClick={ handleClick }/>
+                <form onSubmit={ handleSubmit }>
+                    <h1>Cambiar contraseña</h1>
+                    <input type='password' required={true} placeholder='Nueva contraseña' name='password' onChange={ handleChange }/> <br/>
+                    <input type='password' required={true} placeholder='Confirmar contraseña' name='rePassword' onChange={ handleChange }/> <br/>
+                    <input type='submit' value='Cambiar contraseña'/>
+                </form>                 
             </center>    
         </div>
     );

@@ -38,11 +38,8 @@ export const Login = () => {
         }
     }
 
-    const handleClick = async () => {
-        if(input.email === '' || input.password === ''){
-            alert('Favor de llenar todos los campos');
-            return;
-        }
+    const handleSubmit = async (e) => {
+        e.preventDefault();
 
         const response = await axios({
             method: 'get',
@@ -80,11 +77,13 @@ export const Login = () => {
             <center>
                 <div>
                     <h1>ReadAm</h1> <br/>
-                    <input type = 'text' placeholder = 'email' name = 'email' onChange = { handleChange }/> <br/>
-                    <input type = 'password' placeholder = 'password' name = 'password' onChange = { handleChange }/> <br/>
-                    <input type = 'button' ref={ disabled } value = 'Iniciar sesion' onClick = { handleClick }/> <br/>
+                    <form onSubmit={ handleSubmit }>
+                        <input type = 'text' required={true} placeholder = 'email' name = 'email' onChange = { handleChange }/> <br/>
+                        <input type = 'password' required={true} placeholder = 'password' name = 'password' onChange = { handleChange }/> <br/>
+                        <input type = 'submit' ref={ disabled } value = 'Iniciar sesion'/> <br/>
+                    </form>
                     <a href='/recover'> ¿Has olvidado tu contraseña? </a> <br/>
-                    <a href='/register'> ¿Aun no tienes una cuenta? Registrate aquí </a>
+                    <a href='/register'> ¿Aun no tienes una cuenta? ¡Registrate! </a>
                 </div>
             </center> 
         </div>

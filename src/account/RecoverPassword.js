@@ -23,7 +23,9 @@ export const RecoverPassword = () => {
         });
     }
 
-    const handleClick = async () => {
+    const handleSubmit = async (e) => {
+        e.preventDefault();
+
         hiddenTxt.current.hidden = false;
         hiddenBtn.current.hidden = false;
         disabled.current.disabled = true;
@@ -39,7 +41,9 @@ export const RecoverPassword = () => {
         cookie.set('recover', recovercode.data);
     }
 
-    const handleClickValidate = () => {
+    const handleSubmitValidate = (e) => {
+        e.preventDefault();
+
         if(input.token !== cookie.get('recover')){
             alert('El codigo es incorrecto, favor de verificarlo');
             return;
@@ -59,11 +63,15 @@ export const RecoverPassword = () => {
     return (
         <div>
             <center>
-                <h1>Recuperacion de Contraseña</h1>
-                <input type='text' placeholder='Correo' name='email' require='true' onChange={ handleChange }/> <br/>
-                <input type='button' ref={ disabled } value = 'Mandar token' onClick={ handleClick }/> <br/>
-                <input type ='text ' hidden ref={ hiddenTxt } name='token' placeholder='Pega tu código aquí.' require='true' onChange={ handleChange }/> <br/>
-                <input type='button' hidden ref={ hiddenBtn } value = 'Validar token' onClick={ handleClickValidate }/>
+                <form onSubmit={ handleSubmit }>
+                    <h1>Recuperacion de Contraseña</h1>
+                    <input type='text' required={true} placeholder='Correo' name='email' require='true' onChange={ handleChange }/> <br/>
+                    <input type='submit' ref={ disabled } value = 'Mandar token'/> <br/>
+                </form>
+                <form onSubmit={ handleSubmitValidate }>
+                    <input type ='text ' required={true} hidden ref={ hiddenTxt } name='token' placeholder='Pega tu código aquí.' require='true' onChange={ handleChange }/> <br/>
+                    <input type='submit' hidden ref={ hiddenBtn } value = 'Validar token'/>
+                </form>
             </center>
         </div>
     );
