@@ -1,34 +1,42 @@
-import { useState, useRef } from "react";
+import axios from "axios";
+import { useState } from "react";
 
 export const ConfigurationsBlog = () => {
+    const [ imgProfile, setImgProfile ] = useState(null); 
+    const [ imgBackground, setImgBackground ] = useState(null);
 
-    const imgProfile = useRef(null);
-    const imgBackground = useRef(null);
+    const uploadImgProfile = (e) => {
+        setImgProfile(e);
+    }
 
-    const handleSubmit = (e) => {
+    const uploadImgBackground = (e) => {
+        setImgBackground(e);
+    }
+
+    const insertArchive = async (e) => {
         e.preventDefault();
-        console.dir(imgProfile.current.files[0]);
-        console.dir(imgBackground.current.files[0]);
 
-        const imgFrmProfile = new FormData();
-        const imgFrmBackground = new FormData();
-
-        imgFrmProfile.append('imgProfile', imgProfile.current.files[0]);
-        imgFrmBackground.append('imgBackground', imgBackground.current.files[0]);
-    
-        console.dir(imgFrmProfile);
-        console.dir(imgFrmBackground);
+        const formData = new FormData();
+        formData.append('imgProfile', imgProfile);
+        formData.append("imgPerfilAddress",imgProfile.name)
+        
+        const res = await axios({
+            method:'post',
+            url: 'http://localhost:9000/user/addImageProfile',
+            data: formData
+        });
+        console.log(res)
     }
 
     return (
         <div>
             <center>
-                <form onSubmit={ handleSubmit }>
+                <form onSubmit={ insertArchive }>
                     <h1> Configuraciones del blog </h1>
                     <h5>Foto de perfil: </h5> <br/>
-                    <input type='file' ref={ imgProfile } accept='image/png, image/jpeg' /> <br/> 
+                    <input type='file' accept='image/png, image/jpeg' onChange={(e) => uploadImgProfile(e.target.files[0])} /> <br/> 
                     <h5>Foto de portada: </h5> <br/>
-                    <input type='file' ref={ imgBackground } accept='image/png, image/jpeg'/> <br/>
+                    <input type='file' accept='image/png, image/jpeg' onChange={(e) => uploadImgBackground(e.target.files[0])}/> <br/>
                     <input type='submit'/>
                 </form>   
             </center>
