@@ -22,7 +22,7 @@ export const ConfigurationsBlog = () => {
         
         const res = await axios({
             method:'post',
-            url: 'http://read-am.vercel.app/user/addImageProfile',
+            url: 'http://readam.vercel.app/user/addImageProfile',
             data: formData
         });
         console.log(res)
