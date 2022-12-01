@@ -18,12 +18,13 @@ export const ConfigurationsBlog = () => {
 
         const formData = new FormData();
         formData.append('imgProfile', imgProfile);
-        formData.append("imgPerfilAddress",imgProfile.name)
+        formData.append("imgPerfilAddress", imgProfile.name)
         
         const res = await axios({
             method:'post',
             url: 'https://readam.vercel.app/user/addImageProfile',
-            data: formData
+            data: formData,
+            headers: {'Content-Type': 'multipart/form-data'}
         });
         console.log(res)
     }
