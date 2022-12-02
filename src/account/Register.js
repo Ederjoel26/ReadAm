@@ -15,6 +15,7 @@ export const Register = () => {
         'surname': '',
         'email': '',
         'password':'',
+        'confirm': '',
         'userName': ''
     });
 
@@ -28,8 +29,13 @@ export const Register = () => {
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if( !validatePassword.test(input.password) ) {
-            alert('La contraseña debe de contener letras mayusculas, minusculas, numeros, caracteres especiales y que tenga de 8 a 15 caracteres');
+        if(!validatePassword.test(input.password) ) {
+            alert('La contraseña debe de contener letras mayusculas, minusculas, numeros, caracteres especiales y que tenga de 8 a 15 caracteres.');
+            return;
+        }
+
+        if(input.password !== input.confirm){
+            alert('Las contraseñas no coninciden.');
             return;
         }
 
@@ -38,7 +44,7 @@ export const Register = () => {
             url: `https://apireadamblog-production.up.railway.app/user/findEmail/${ input.email }`
         });
 
-        if( response.data !== null ){
+        if(response.data !== null ){
             alert('El correo electronico introducido ya se ha utilizado anteriormente en otra cuenta, favor de utilizar otro correo.')
             return;
         }   
@@ -75,11 +81,12 @@ export const Register = () => {
             <center>
                 <form onSubmit={ handleSubmit }>
                     <h1>Registrarse</h1>
-                    <input type= 'text' required={true} placeholder = 'Nombre' require='true' name = 'name' onChange = { handleChange }/> <br/>
-                    <input type= 'text' required={true} placeholder="Apellido" require='true' name = 'surname' onChange = { handleChange }/> <br/>
-                    <input type = 'text' required={true} placeholder="Correo" require='true' name = 'email' onChange = { handleChange }/> <br/>
-                    <input type = 'password' required={true} placeholder="Contraseña" require='true' name = 'password' onChange = { handleChange }/> <br/>
-                    <input type = 'text' required={true} placeholder="Nombre de usuario" require='true' name = 'userName' onChange = { handleChange }/> <br/>
+                    <input type= 'text' required={true} placeholder = 'Nombre' name = 'name' onChange = { handleChange }/> <br/>
+                    <input type= 'text' required={true} placeholder="Apellido" name = 'surname' onChange = { handleChange }/> <br/>
+                    <input type = 'text' required={true} placeholder="Correo" name = 'email' onChange = { handleChange }/> <br/>
+                    <input type = 'password' required={true} placeholder="Contraseña" name = 'password' onChange = { handleChange }/> <br/>
+                    <input type = 'password' required={true} placeholder="Confirmar contraseña" name = 'confirm' conChange = { handleChange }/>
+                    <input type = 'text' required={true} placeholder="Nombre de usuario" name = 'userName' onChange = { handleChange }/> <br/>
                     <input type = 'submit' ref={ disabled } value='Registrarse' require='true'/>
                 </form>
             </center>
