@@ -44,7 +44,7 @@ export const ConfigurationsBlog = () => {
         const res = await axios({
             headers:{'Content-Type': 'multipart/form-data'},
             method:'post',
-            url: 'https://apireadamblog-production.up.railway.app/user/addImageProfile',
+            url: 'https://apireadamblog-production.up.railway.app/user/addImage',
             data: formData
         });
 
