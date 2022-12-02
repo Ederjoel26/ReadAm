@@ -44,13 +44,13 @@ export const ConfigurationsBlog = () => {
         const res = await axios({
             headers:{'Content-Type': 'multipart/form-data'},
             method:'post',
-            url: 'http://localhost:9000/user/addImageProfile',
+            url: 'https://apireadamblog-production.up.railway.app/user/addImageProfile',
             data: formData
         });
 
         await axios({
             method: 'post',
-            url: 'http://localhost:9000/user/insert',
+            url: 'https://apireadamblog-production.up.railway.app/user/insert',
             data:
             {
                 email: cookie.get('validationEmail'),
