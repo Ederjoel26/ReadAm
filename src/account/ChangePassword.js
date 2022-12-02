@@ -53,12 +53,12 @@ export const ChangePassword = () => {
 
         const user = await axios({
             method: 'get',
-            url: `https://readam.vercel.app/user/findEmail/${ cookie.get('emailRecover')}`
+            url: `https://apireadamblog-production.up.railway.app/user/findEmail/${ cookie.get('emailRecover')}`
         });
 
         await axios({
             method:'put',
-            url:`https://readam.vercel.app/user/update/${ cookie.get('emailRecover')}`,
+            url:`https://apireadamblog-production.up.railway.app/user/update/${ cookie.get('emailRecover')}`,
             data:{
                 userName: user.data.userName,
                 email: user.data.email,

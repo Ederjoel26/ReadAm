@@ -43,7 +43,7 @@ export const Login = () => {
 
         const response = await axios({
             method: 'get',
-            url: `https://readam.vercel.app/user/findEmail/${ input.email }`
+            url: `https://apireadamblog-production.up.railway.app/user/findEmail/${ input.email }`
         });
 
         if(response.data === null){

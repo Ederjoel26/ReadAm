@@ -32,7 +32,7 @@ export const RecoverPassword = () => {
         
         const recovercode = await axios({
             method:'post',
-            url: 'https://readam.vercel.app/user/sendMailRecover',
+            url: 'https://apireadamblog-production.up.railway.app/user/sendMailRecover',
             data: {
                 email: input.email
             }

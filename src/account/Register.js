@@ -35,7 +35,7 @@ export const Register = () => {
 
         const response = await axios({
             method: 'get',
-            url: `https://readam.vercel.app/user/findEmail/${ input.email }`
+            url: `https://apireadamblog-production.up.railway.app/user/findEmail/${ input.email }`
         });
 
         if( response.data !== null ){
@@ -47,7 +47,7 @@ export const Register = () => {
     
         const validationCode = await axios({
             method:'post',
-            url: 'https://readam.vercel.app/user/sendMail',
+            url: 'https://apireadamblog-production.up.railway.app/user/sendMail',
             data: {
                 email: input.email
             }
