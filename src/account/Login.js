@@ -64,7 +64,7 @@ export const Login = () => {
 
     useEffect(() => {
         if( cookie.get('email') !== undefined ){
-            navigate('/feed')
+            navigate('/feed');
         }
 
         if(Notification.permission !== 'granted'){

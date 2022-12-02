@@ -1,5 +1,5 @@
 import axios from "axios";
-import { useState } from "react";
+import { useEffect, useState } from "react";
 import Cookies from "universal-cookie";
 import { useNavigate } from "react-router-dom";
 
@@ -73,8 +73,18 @@ export const ConfigurationsBlog = () => {
         cookie.remove('validationPass');
         cookie.remove('validationUserName');
 
-        navigate('/feed');
+        navigate('/select-categories');
     }
+
+    useEffect(() => {
+        if(cookie.get('email') !== undefined){
+            navigate('/feed');
+        }
+
+        if(cookie.get('validationName') === undefined){
+            navigate('/login');
+        }
+    }, []);
 
     return (
         <div>
@@ -88,7 +98,6 @@ export const ConfigurationsBlog = () => {
                     <input type='submit'/>
                 </form>   
             </center>
-            
         </div>
     );
 }

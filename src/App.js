@@ -7,6 +7,7 @@ import { RecoverPassword } from './account/RecoverPassword';
 import { ChangePassword } from './account/ChangePassword';
 import { Error } from './views/Error';
 import { ConfigurationsBlog } from './account/ConfigurationsBlog';
+import { SelectCategories } from './account/SelectCategories';
 
 function App() {
   return (    
@@ -19,6 +20,7 @@ function App() {
           <Route path='/recover' element={ <RecoverPassword/> }></Route>
           <Route path='/change-pass' element= { <ChangePassword/> }></Route>
           <Route path='/configurations-blog' element={ <ConfigurationsBlog/> }></Route>
+          <Route path='/select-categories' element={ <SelectCategories/> }></Route>
           <Route path='*' element={ <Error/> }></Route>
         </Routes>
       </Router>
