@@ -85,7 +85,7 @@ export const Register = () => {
                     <input type= 'text' required={true} placeholder="Apellido" name = 'surname' onChange = { handleChange }/> <br/>
                     <input type = 'text' required={true} placeholder="Correo" name = 'email' onChange = { handleChange }/> <br/>
                     <input type = 'password' required={true} placeholder="Contraseña" name = 'password' onChange = { handleChange }/> <br/>
-                    <input type = 'password' required={true} placeholder="Confirmar contraseña" name = 'confirm' conChange = { handleChange }/>
+                    <input type = 'password' required={true} placeholder="Confirmar contraseña" name = 'confirm' onChange = { handleChange }/>
                     <input type = 'text' required={true} placeholder="Nombre de usuario" name = 'userName' onChange = { handleChange }/> <br/>
                     <input type = 'submit' ref={ disabled } value='Registrarse' require='true'/>
                 </form>
