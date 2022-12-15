@@ -1,4 +1,4 @@
-import { useEffect, useState, useRef } from 'react';
+import { useEffect, useRef } from 'react';
 import axios from 'axios';
 import Cookies from 'universal-cookie';
 import { useNavigate } from 'react-router-dom';
@@ -9,18 +9,8 @@ export const Login = () => {
     const cookie = new Cookies();
     const navigate = useNavigate();
     const disabled = useRef(false);
-
-    const [ input, setInput ] = useState({
-        'email': '',
-        'password':''
-    });
-
-    const handleChange = (e) => {
-        setInput({
-            ...input,
-            [e.target.name]: e.target.value
-        });
-    }
+    const email = useRef(null);
+    const password = useRef(null);
 
     const makeNotification = (title, body) => {
         if(Notification.permission !== 'granted'){
@@ -43,7 +33,7 @@ export const Login = () => {
 
         const response = await axios({
             method: 'get',
-            url: `https://apireadamblog-production.up.railway.app/user/findEmail/${ input.email }`
+            url: `https://apireadamblog-production.up.railway.app/user/findEmail/${ email.current.value }`
         });
 
         if(response.data === null){
@@ -51,13 +41,13 @@ export const Login = () => {
             return;
         }
 
-        if(response.data.email !== input.email || response.data.password !== md5(input.password)){
+        if(response.data.email !== email.current.value || response.data.password !== md5(password.current.value)){
             alert('La contraseña es incorrecta, favor de rectificarla.');
             return;
         }
         
         disabled.current.disabled = true;
-        cookie.set('email', input.email);
+        cookie.set('email', email.current.value);
         makeNotification('¡Qué bueno que regresaste!', 'Esperamos que sigas teniendo una gran experiencia.');
         navigate('/feed');
     }
@@ -78,8 +68,8 @@ export const Login = () => {
                 <div>
                     <h1>ReadAm</h1> <br/>
                     <form onSubmit={ handleSubmit }>
-                        <input type = 'text' required={true} placeholder = 'email' name = 'email' onChange = { handleChange }/> <br/>
-                        <input type = 'password' required={true} placeholder = 'password' name = 'password' onChange = { handleChange }/> <br/>
+                        <input type = 'text' ref={ email } required={true} placeholder = 'email' name = 'email'/> <br/>
+                        <input type = 'password' ref={ password } required={true} placeholder = 'password' name = 'password'/> <br/>
                         <input type = 'submit' ref={ disabled } value = 'Iniciar sesion'/> <br/>
                     </form>
                     <a href='/recover'> ¿Has olvidado tu contraseña? </a> <br/>

@@ -7,22 +7,12 @@ export const ValidationRegister = () => {
     const cookie = new Cookies();
     const navigate = useNavigate();
     const disabled = useRef(false);
-
-    const [ input, setInput ] = useState({
-        'validationCode': ''
-    });
-
-    const handleChange = (e) => {
-        setInput({
-            ...input,
-            [e.target.name]: e.target.value
-        });
-    }
+    const validationCode = useRef(null);
 
     const handleSubmit = async (e) => {
         e.preventDefault();
 
-        if(input.validationCode !== cookie.get('code')){
+        if(validationCode.current.value !== cookie.get('code')){
             alert('El codigo es incorrecto, favor de verificarlo.');
             return;
         }
@@ -50,7 +40,7 @@ export const ValidationRegister = () => {
             <center>
                 <form onSubmit={ handleSubmit }>
                     <h1>Verificacion de correo</h1>
-                    <input type = 'text' required={true} name = "validationCode" placeholder = "Pega tu código aquí"  onChange={ handleChange }/> <br/>
+                    <input type = 'text' required={ true } name = "validationCode" placeholder = "Pega tu código aquí" ref={ validationCode }/> <br/>
                     <input type = 'submit' ref={ disabled } value='Verificar'/>
                 </form>
             </center>
