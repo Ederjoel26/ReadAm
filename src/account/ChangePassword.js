@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useRef, useState } from "react";
 import axios from "axios";
 import Cookies from "universal-cookie";
 import { useNavigate } from "react-router-dom";
@@ -8,19 +8,9 @@ export const ChangePassword = () => {
 
     const cookie = new Cookies();
     const navigate = useNavigate();
+    const password = useRef(null);
+    const rePassword = useRef(null);
     const validatePassword = /^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[$@$!%*?&])([A-Za-z\d$@$!%*?&]|[^ ]){8,15}$/;
-
-    const [ input, setInput ] = useState({
-        'password': '',
-        'rePassword': ''
-    });
-
-    const handleChange = (e) => {
-        setInput({
-            ...input,
-            [e.target.name]: e.target.value
-        });
-    }
 
     const makeNotification = (title, body) => {
         if(Notification.permission !== 'granted'){
@@ -41,12 +31,12 @@ export const ChangePassword = () => {
     const handleSubmit = async(e) => {
         e.preventDefault();
 
-        if(!validatePassword.test(input.password) || !validatePassword.test(input.rePassword)){
+        if(!validatePassword.test(password.current.value) || !validatePassword.test(rePassword.current.value)){
             alert('La contraseña debe de contener letras mayusculas, minusculas, numeros, caracteres especiales y que tenga de 8 a 15 caracteres');
             return;
         }
 
-        if(input.password !== input.rePassword){
+        if(password.current.value !== rePassword.current.value){
             alert('Las contraseñas no son iguales, favor de rectificar.');
             return;
         }
@@ -62,7 +52,7 @@ export const ChangePassword = () => {
             data:{
                 userName: user.data.userName,
                 email: user.data.email,
-                password: input.password,
+                password: password.current.value,
                 imgPerfilAddress: user.data.imgPerfilAddress,
                 imgBackgroundAddress: user.data.imgBackgroundAddress
             }
@@ -88,8 +78,8 @@ export const ChangePassword = () => {
             <center>
                 <form onSubmit={ handleSubmit }>
                     <h1>Cambiar contraseña</h1>
-                    <input type='password' required={true} placeholder='Nueva contraseña' name='password' onChange={ handleChange }/> <br/>
-                    <input type='password' required={true} placeholder='Confirmar contraseña' name='rePassword' onChange={ handleChange }/> <br/>
+                    <input type='password' ref={ password } required={ true } placeholder='Nueva contraseña' name='password'/> <br/>
+                    <input type='password' ref={ rePassword } required={ true } placeholder='Confirmar contraseña' name='rePassword'/> <br/>
                     <input type='submit' value='Cambiar contraseña'/>
                 </form>                 
             </center>    
